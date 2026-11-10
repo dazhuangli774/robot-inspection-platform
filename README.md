@@ -128,13 +128,10 @@ flowchart LR
 # 1. 构建（一次即可）
 mvn -DskipTests install
 
-# 2. 生成依赖 classpath（一步）
-mvn -pl ricp-user dependency:build-classpath -Dmdep.outputFile=scripts/local-demo/classpath.txt
-
-# 3. 启动四个服务
+# 2. 启动四个服务（首次会自动生成依赖清单）
 powershell -ExecutionPolicy Bypass -File scripts\local-demo\start-all.ps1
 
-# 4. 浏览器打开
+# 3. 浏览器打开
 #    http://localhost:8081
 ```
 

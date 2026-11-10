@@ -1,33 +1,44 @@
-# 本地演示：启动全部服务（H2 内存库，无需 MySQL / Nacos）
+﻿# 本地演示：启动全部服务（H2 内存库，无需 MySQL / Nacos）
 #
-# 用法：
-#   1) 先构建：mvn -DskipTests install
-#   2) 再运行：powershell -ExecutionPolicy Bypass -File scripts\local-demo\start-all.ps1
-#   3) 浏览器打开 http://localhost:8081
+# 用法（在仓库根目录执行）：
+#   powershell -ExecutionPolicy Bypass -File scripts\local-demo\start-all.ps1
 #
-# 依赖：JDK 8（Spring Boot 2.3 不支持 17+）
+# 前置：
+#   - JDK 8（Spring Boot 2.3 不支持 JDK 17+），已设 JAVA_HOME 或 java 在 PATH
+#   - Maven 3.6+，mvn 在 PATH
+#   - 已构建过一次：mvn -DskipTests install
+#
 # 停止：scripts\local-demo\stop-all.ps1
 
 $ErrorActionPreference = "Stop"
 
 $repoRoot = (Resolve-Path "$PSScriptRoot\..\..").Path
-$java = if ($env:JAVA_HOME) { "$env:JAVA_HOME\bin\java.exe" } else { "java" }
+$java = if ($env:JAVA_HOME) { Join-Path $env:JAVA_HOME "bin\java.exe" } else { "java" }
 
 if (-not (Test-Path "$repoRoot\ricp-user\target\classes")) {
-  Write-Host "未找到编译产物，请先执行：mvn -DskipTests install" -ForegroundColor Yellow
+  Write-Host "未找到编译产物，请先在仓库根目录执行：mvn -DskipTests install" -ForegroundColor Yellow
   exit 1
 }
 
-# 依赖 jar 列表（由 mvn dependency:build-classpath 生成）
-$depsFile = "$PSScriptRoot\classpath.txt"
+# 依赖 jar 列表：首次运行时自动生成（输出路径用绝对路径，避免 Maven 按模块目录解析）
+$depsFile = Join-Path $PSScriptRoot "classpath.txt"
 if (-not (Test-Path $depsFile)) {
-  Write-Host "缺少 classpath.txt，请执行：" -ForegroundColor Yellow
-  Write-Host "  mvn -pl ricp-user dependency:build-classpath -Dmdep.outputFile=scripts\local-demo\classpath.txt"
-  exit 1
+  $mvn = Get-Command mvn -ErrorAction SilentlyContinue
+  if (-not $mvn) {
+    Write-Host "缺少 classpath.txt 且找不到 mvn，请手动执行：" -ForegroundColor Yellow
+    Write-Host "  mvn -pl ricp-user dependency:build-classpath -Dmdep.outputFile=$depsFile"
+    exit 1
+  }
+  Write-Host "生成依赖清单（首次运行，约 10 秒）..."
+  Push-Location $repoRoot
+  & mvn -B -q -pl ricp-user dependency:build-classpath "-Dmdep.outputFile=$depsFile"
+  Pop-Location
+  if (-not (Test-Path $depsFile)) { Write-Host "生成 classpath.txt 失败" -ForegroundColor Red; exit 1 }
 }
+
 $deps = (Get-Content $depsFile -Raw).Trim()
 
-# 四个模块共用的演示参数：H2 内存库 + 关闭 Nacos
+# 四个服务共用的演示参数：H2 内存库 + 关闭 Nacos
 $commonArgs = @(
   "-Dspring.datasource.url=jdbc:h2:mem:ricp;MODE=MySQL;DB_CLOSE_DELAY=-1;DATABASE_TO_LOWER=TRUE",
   "-Dspring.datasource.driver-class-name=org.h2.Driver",
@@ -41,7 +52,6 @@ $commonArgs = @(
   "-Dpagehelper.helperDialect=h2"
 )
 
-# name / 端口 / 主类 / 额外参数
 $services = @(
   @{ name = "user";   port = 8081; main = "com.wust30405.ricp.user.UserApplication";     extra = @() },
   @{ name = "task";   port = 8082; main = "com.wust30405.ricp.task.TaskApplication";     extra = @() },
@@ -49,8 +59,10 @@ $services = @(
   @{ name = "record"; port = 8086; main = "com.wust30405.ricp.record.RecordApplication"; extra = @() }
 )
 
+New-Item -ItemType Directory -Force -Path "$repoRoot\logs" | Out-Null
+
 foreach ($s in $services) {
-  # 该模块自己的 classes 必须在最前，否则会读到别的模块的 application.yml
+  # 该模块自己的 classes 必须排在最前，否则会读到别的模块的 application.yml
   $cp = "$repoRoot\ricp-$($s.name)\target\classes;" +
         "$repoRoot\ricp-common\target\classes;" +
         "$repoRoot\ricp-task\target\classes;" +
@@ -59,7 +71,6 @@ foreach ($s in $services) {
 
   $args = $commonArgs + $s.extra + @("-Dserver.port=$($s.port)", "-cp", $cp, $s.main)
   $log = "$repoRoot\logs\local-demo-$($s.name).log"
-  New-Item -ItemType Directory -Force -Path "$repoRoot\logs" | Out-Null
 
   Start-Process -FilePath $java -ArgumentList $args `
     -RedirectStandardOutput $log -RedirectStandardError "$log.err" -WindowStyle Hidden
