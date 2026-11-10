@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <meta name="renderer" content="webkit"/>
+  <title>巡检计划表</title>
+  <!-- 避免IE使用兼容模式 -->
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <link th:href="@{favicon.ico}" rel="stylesheet"/>
+  <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+  <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+  <link th:href="@{/css/style.css}" rel="stylesheet"/>
+  <link th:href="@{/css/skins.css}" rel="stylesheet"/>
+  <link th:href="@{/yuludev/css/yuludev-ui.css}" rel="stylesheet"/>
+  <link th:href="@{/css/bootstrap-datetimepicker.min.css}" rel="stylesheet" />
+  <link th:href="@{/css/jquery-ui.min.css}" rel="stylesheet" />
+  <style>
+.body{
+  display: flex;
+}
+.body_left{
+  flex:1;
+  padding-right: 20px;
+}
+.plan_content{
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.plan_item{
+  display: flex;
+  text-align: center;
+  margin-top: 10px;
+}
+.plan_time{
+  flex:1;
+}
+select{
+  flex:1;
+  text-align: center;
+}
+option{
+  text-align:center;
+}
+.body_center{
+  flex:1;
+  padding-right: 20px;
+}
+.body_right{
+  flex:1;
+  padding-right: 20px;
+}
+#operateArea{
+  position: fixed;
+  bottom:50px;
+  right: 50px;
+}
+</style>
+</head>
+<body>
+<div class="body">
+  <div class="body_left">
+    <div class="plan_content">
+      <div class="plan_item"><div class="plan_time" id="time_1">00:00-00:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_2">00:30-01:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_3">01:00-01:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_4">01:30-02:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_5">02:00-02:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_6">02:30-03:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_7">03:00-03:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_8">03:30-04:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_9">04:00-04:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_10">04:30-05:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_11">05:00-05:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_12">05:30-06:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_13">06:00-06:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_14">06:30-07:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_15">07:00-07:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_16">07:30-08:00</div><select><option value="0">充电</option></select></div>
+    </div>
+  </div>
+  <div class="body_center">
+    <div class="plan_content">
+      <div class="plan_item"><div class="plan_time" id="time_17">08:00-08:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_18">08:30-09:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_19">09:00-09:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_20">09:30-10:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_21">10:00-10:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_22">10:30-11:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_23">11:00-11:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_24">11:30-12:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_25">12:00-12:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_26">12:30-13:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_27">13:00-13:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_28">13:30-14:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_29">14:00-14:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_30">14:30-15:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_31">15:00-15:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_32">15:30-16:00</div><select><option value="0">充电</option></select></div>
+    </div>
+  </div>
+  <div class="body_right">
+    <div class="plan_content">
+      <div class="plan_item"><div class="plan_time" id="time_33">16:00-16:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_34">16:30-17:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_35">17:00-17:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_36">17:30-18:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_37">18:00-18:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_38">18:30-19:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_39">19:00-19:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_40">19:30-20:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_41">20:00-20:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_42">20:30-21:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_43">21:00-21:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_44">21:30-22:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_45">22:00-22:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_46">22:30-23:00</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_47">23:00-23:30</div><select><option value="0">充电</option></select></div>
+      <div class="plan_item"><div class="plan_time" id="time_48">23:30-24:00</div><select><option value="0">充电</option></select></div>
+    </div>
+  </div>
+</div>
+
+<div id="operateArea">
+  <!-- <button type="button" class="btn btn-info" onclick="add()">新建</button> -->
+  <button type="button" class="btn btn-info" onclick="save()">保存</button>
+  <button type="button" class="btn btn-success" onclick="edit()">修改</button>
+</div>
+
+</body>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script th:src="@{/yuludev/js/yuludev-ui.js?v=4.2.0}"></script>
+<script th:src="@{/yuludev/js/common.js?v=4.2.0}"></script>
+<script th:src="@{/yuludev/index.js}"></script>
+<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
+<script>
+ $(function(){
+   let task=initSelect();
+  $('select').attr('disabled',true);
+  console.log(task);
+   listPlan(task);
+ })
+function initSelect(){
+  let  task={};
+  task[0]="充电";
+   $.ajax({
+     type:"GET",
+     url:"./listAllTask",
+     success:function(data){
+       $.each(data,function(i,v){
+         let content="";
+         task[data[i].id]=data[i].tasktype;
+         content+="<option value="+data[i].id+">"+data[i].tasktype+"</option>"
+          $("select").append(content);
+       })
+     }
+   })
+  return task;
+
+}
+
+ function save(){
+   sendAjax();
+   $('select').attr('disabled',true);
+   listPlan();
+ }
+ function edit(){
+   $('select').attr('disabled',false);
+ }
+function  add(){
+    sendAjax_insert();
+    $('select').attr('disabled',true);
+}
+
+ function listPlan(task){
+  $.ajax({
+    type:'GET',
+    url:"/listPlan",
+    success:function(data){
+      $.each(data,function(i,val){
+        let id=parseInt(data[i].id);
+        let taskId=data[i].taskid;
+        let id_name="#time_"+id;
+        let selectNode=$(id_name).next();
+       selectNode.val(taskId);
+      })
+    }
+  })
+ }
+
+
+ function sendAjax(){
+   for(let i=1;i<=48;i++){
+    let id_name="#time_"+i;
+    let taskId=$(id_name).next().val();
+    let cron="";
+    if(i%2){
+      //奇数
+      let startHour=parseInt(i/2)
+      let startMinute="0";
+      let startSecond="0"
+      cron=startSecond+" "+startMinute+" "+startHour+" "+"* * ? *"
+
+      let Data={};
+      Data["id"]=i;
+      Data["taskid"]=taskId;
+      Data["cron"]=cron;
+
+      $.ajax({
+        type:"POST",
+        url:"/updatePlan",
+        contentType: 'application/json;charset=utf-8',
+        data:JSON.stringify(Data),
+        processData:false,
+        // contentType:false,
+        success:function(data){
+          console.log("success");
+        }
+      })
+        // let formData=new FormData();
+        // formData.append("id",i);
+        // formData.append("taskid",taskId);
+        // formData.append("cron",cron);
+
+        // $.ajax({
+        //     type:"POST",
+        //     url:"/updatePlan",
+        //     data:formData,
+        //     processData:false,
+        //     contentType:false,
+        //     success:function(data){
+        //         console.log("success");
+        //     }
+        // })
+    }else{
+      //偶数
+      let startHour=parseInt(i/2-1);
+      let startMinute="30";
+      let startSecond="0";
+      cron=startSecond+" "+startMinute+" "+startHour+" "+"* * ? *"
+        let formData=new FormData();
+        formData.append("id",i);
+        formData.append("taskid",taskId);
+        formData.append("cron",cron);
+        $.ajax({
+            type:"POST",
+            url:"/updatePlan",
+            data:formData,
+            processData:false,
+            contentType:false,
+            success:function(data){
+                console.log("success");
+            }
+        })
+    }
+   }
+
+ }
+
+ function sendAjax_insert(){
+     for(let i=1;i<=48;i++){
+         let id_name="#time_"+i;
+         let taskid=$(id_name).next().val();
+         let cron="";
+         if(i%2){
+             //奇数
+             let startHour= parseInt(i/2)
+             let startMinute="0";
+             let startSecond="0"
+             cron=startSecond+" "+startMinute+" "+startHour+" "+"* * ? *"
+             let formdata=new FormData();
+             formdata.append("id",i);
+             formdata.append("taskid",taskid);
+             formdata.append("cron",cron);
+             $.ajax({
+                 type:"POST",
+                 url:"/insertPlan",
+                 data:formdata,
+                 processData:false,
+                  contentType:false,
+                 success:function(data){
+                     console.log("success");
+                 }
+             })
+         }else{
+             //偶数
+             let startHour=parseInt(i/2-1);
+             let startMinute="30";
+             let startSecond="0";
+             cron=startSecond+" "+startMinute+" "+startHour+" "+"* * ? *"
+             let formdata=new FormData();
+             formdata.append("id",i);
+             formdata.append("taskid",taskid);
+             formdata.append("cron",cron);
+             $.ajax({
+                 type:"POST",
+                 url:"/insertPlan",
+                 processData:false,
+                  contentType:false,
+                 data:formdata,
+                 success:function(data){
+                     console.log("success");
+                 }
+             })
+         }
+     }
+ }
+</script>
+</html>

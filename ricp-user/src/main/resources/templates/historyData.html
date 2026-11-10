@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org" >
+<head>
+    <th:block th:include="include :: header('巡检记录列表')" />
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>录入信息</title>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:href="@{favicon.ico}" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/skins.css}" rel="stylesheet"/>
+    <link th:href="@{/yuludev/css/yuludev-ui.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery-ui.min.css}" rel="stylesheet" />
+
+
+</head>
+
+<body>
+<div class="container-div">
+    <div class="row">
+        <div id="middle" class="col-sm-12 select-table table-striped">
+<!--            <div id="label" >-->
+<!--                <ul class="nav nav-tabs">-->
+<!--                    <li id="allInformat" role="presentation" class="active"><a  href="#"  onclick="showAllInformat()">所有信息</a></li>-->
+<!--&lt;!&ndash;                    <li id="analysis" role="presentation" ><a  href="#" onclick="showAnalysis()">统计分析</a></li>&ndash;&gt;-->
+<!--&lt;!&ndash;                    &lt;!&ndash;                        <li id="temAndHumAnalysis" role="presentation"><a  href="#" onclick="showTemAndHumAnalysis()">温度湿度分析</a></li>&ndash;&gt;&ndash;&gt;-->
+<!--                </ul>-->
+<!--            </div>-->
+
+            <div id="dataOne" style="display: block">
+<!--                <div class="col-sm-12 search-collapse">-->
+<!--                    <form id="config-form" >-->
+<!--                        <div class="select-list">-->
+<!--                            <ul>-->
+<!--                                <li>-->
+<!--                                    柜子名称：<select name="taskname">-->
+<!--                                    <option value="所有">所有</option>-->
+<!--                                    <option value="703">703</option>-->
+<!--                                    <option value="704">704</option>-->
+<!--                                    <option value="705">705</option>-->
+<!--                                </select>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    仪器名称：<select name="instrument">-->
+<!--                                    <option value="所有">所有</option>-->
+<!--                                    <option value="微保装置指示灯">微保装置指示灯</option>-->
+<!--                                    <option value="微保装置显示屏">微保装置显示屏</option>-->
+<!--                                    <option value="开关柜温度">开关柜温度</option>-->
+<!--                                    <option value="开关柜湿度">开关柜湿度</option>-->
+<!--                                    <option value="就地，远方转换开关">就地，远方转换开关</option>-->
+<!--                                    <option value="手车位置">手车位置</option>-->
+<!--                                    <option value="断路器状态">断路器状态</option>-->
+<!--                                    <option value="接地刀闸状态">接地刀闸状态</option>-->
+<!--                                    <option value="送电状态">送电状态</option>-->
+<!--                                    <option value="储能开关状态">储能开关状态</option>-->
+<!--                                    <option value="能量锁上锁状态">能量锁上锁状态</option>-->
+<!--                                    <option value="三相电流值">三相电流值</option>-->
+<!--                                    <option value="三相电流的三角显示灯">三相电流的三角显示灯</option>-->
+<!--                                    <option value="分闸指示灯">分闸指示灯</option>-->
+<!--                                    <option value="合闸指示灯">合闸指示灯</option>-->
+<!--                                    <option value="手车工作位置连锁跳闸">手车工作位置连锁跳闸</option>-->
+<!--                                    <option value="保护跳闸">保护跳闸</option>-->
+<!--                                </select>-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    告警等级：<select name="status">-->
+<!--                                    <option value="所有">所有</option>-->
+<!--                                    <option value="报警">报警</option>-->
+<!--                                    <option value="告警">告警</option>-->
+<!--                                    <option value="异常">异常</option>-->
+<!--                                    <option value="正常">正常</option>-->
+<!--                                </select>-->
+<!--                                </li>-->
+<!--                                <li class="select-time">-->
+<!--                                    <label>创建时间： </label>-->
+<!--                                    <input type="text" class="form-control" id="startTime" placeholder="开始时间" name="beginTime" autocomplete="off" style="width: 130px" onkeydown="return false">-->
+<!--                                    <span>-</span>-->
+<!--                                    <input type="text" class="form-control" id="endTime" placeholder="结束时间" name="endTime" autocomplete="off" style="width: 130px" onkeydown="return false">-->
+<!--                                </li>-->
+<!--                                <li>-->
+<!--                                    <button type="button" class="btn btn-primary btn-rounded btn-sm" onclick="search()"><i class="fa fa-search"></i>&nbsp;搜索</button>-->
+<!--                                    <button class="btn btn-warning btn-rounded btn-sm" type="reset"><i class="fa fa-refresh"></i>&nbsp;重置</button>-->
+<!--                                    &lt;!&ndash;                                        <a class="layui-btn layui-btn-primary" id="reset"><i class="fa fa-refresh"></i>&nbsp;重置</a>&ndash;&gt;-->
+<!--                                </li>-->
+<!--                            </ul>-->
+<!--                        </div>-->
+<!--                    </form>-->
+
+<!--                </div>-->
+                <div class="col-sm-12 search-collapse">
+                    <div id="pageContext">
+                        <table class="table table-bordered table-hover">
+                            <thead>
+                            <tr>
+                                <th style="text-align: center; ">记录序号</th>
+                                <th style="text-align: center; ">机柜名称</th>
+                                <th style="text-align: center; ">记录编号</th>
+                                <th style="text-align: center; ">识别时间</th>
+                                <th style="text-align: center; ">点位名称</th>
+                                <th style="text-align: center; ">识别结果</th>
+                                <th style="text-align: center; ">设备状态</th>
+                                <th style="text-align: center; ">操作</th>
+                            </tr>
+                            </thead>
+                            <tbody id="pageBody">
+
+                            </tbody>
+                        </table>
+                        <div id="pageBottom">
+                            <ul  id="pageLimit" class="pagination" >
+
+                            </ul>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+            <div id="dataTwo" style="display: none">
+                <div class="search-collapse">
+                    <ul class="nav nav-tabs">
+                        <li id="electric" role="presentation" class="active"><a  href="#"  onclick="showElectric()">电流统计</a></li>
+                        <li id="TemAndHum" role="presentation" ><a  href="#" onclick="showTemAndHum()">温度湿度统计</a></li>
+
+                    </ul>
+                </div>
+                <div id="eleInformation">
+                    <div id="eleSearchSelect" class="col-sm-12 search-collapse ">
+
+                        <form id="ele_config-form" >
+                            <div class="select-list">
+                                <ul>
+                                    <li>
+                                        柜子名称：<select name="taskname">
+                                        <option value="所有">所有</option>
+                                        <option value="703">703</option>
+                                        <option value="704">704</option>
+                                        <option value="705">705</option>
+                                    </select>
+                                    </li>
+
+                                    <li class="select-time">
+                                        <label>创建时间： </label>
+                                        <input type="text" class="form-control" id="eleStartTime" placeholder="开始时间" name="beginTime" autocomplete="off" style="width: 130px" onkeydown="return false">
+                                        <span>-</span>
+                                        <input type="text" class="form-control" id="eleEndTime" placeholder="结束时间" name="endTime" autocomplete="off" style="width: 130px" onkeydown="return false">
+                                    </li>
+                                    <li>
+                                        <button type="button" class="btn btn-primary btn-rounded btn-sm" onclick="eleSearch()"><i class="fa fa-search"></i>&nbsp;电流搜索</button>
+                                        <button class="btn btn-warning btn-rounded btn-sm" type="reset"><i class="fa fa-refresh"></i>&nbsp;重置</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div id="eleChart" class="col-sm-12 search-collapse ">
+                        <div id="container" class="col-md-offset-4" style="width: 600px;height:400px;"></div>
+                    </div>
+                </div>
+                <div id="temAndHumInformation" style="display: none;">
+                    <div id="temAndHumSearchSelect" class="col-sm-12 search-collapse ">
+                        <form id="temAndHum_config-form" >
+                            <div class="select-list">
+                                <ul>
+                                    <li>
+                                        柜子名称：<select name="taskname">
+                                        <option value="所有">所有</option>
+                                        <option value="703">703</option>
+                                        <option value="704">704</option>
+                                        <option value="705">705</option>
+                                    </select>
+                                    </li>
+
+                                    <li class="select-time">
+                                        <label>创建时间： </label>
+                                        <input type="text" class="form-control" id="temAndHumStartTime" placeholder="开始时间" name="beginTime" autocomplete="off" style="width: 130px" onkeydown="return false">
+                                        <span>-</span>
+                                        <input type="text" class="form-control" id="temAndHumEndTime" placeholder="结束时间" name="endTime" autocomplete="off" style="width: 130px" onkeydown="return false">
+                                    </li>
+                                    <li>
+                                        <button type="button" class="btn btn-primary btn-rounded btn-sm" onclick="temAndHumSearch()"><i class="fa fa-search"></i>&nbsp;温度搜索</button>
+                                        <button class="btn btn-warning btn-rounded btn-sm" type="reset"><i class="fa fa-refresh"></i>&nbsp;重置</button>
+                                    </li>
+                                </ul>
+                            </div>
+                        </form>
+
+                    </div>
+                    <div id="temAndHumChart" class="col-md-12 search-collapse row">
+                        <div id="temContainer" class="col-md-6" style="width: 600px;height:400px;"></div>
+                        <div id="humContainer" class="col-md-6" style="width: 600px;height:400px;"></div>
+                    </div>
+                </div>
+
+            </div>
+            <div id="dataThree" style="display: none">
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+<div id="newdialog" >
+    <div class="modal-dialog">
+        <div class="model-content">
+
+            <img id="dialogImg" src="../img/设备.jpg" >
+        </div>
+    </div>
+</div>
+
+
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/jquery-ui-1.10.4.min.js}"></script>
+<script th:src="@{/ajax/libs/layui/layui.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script th:src="@{/yuludev/js/yuludev-ui.js?v=4.2.0}"></script>
+<script th:src="@{/yuludev/js/common.js?v=4.2.0}"></script>
+<script th:src="@{/yuludev/index.js}"></script>
+<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
+<!--<script th:src="@{/js/highcharts.js}"></script>-->
+
+<!--<script th:src="@{/js/bootstrap.min.js}"></script>-->
+<!--<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>-->
+<!--<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>-->
+<!--<script th:src="@{/js/jquery.contextMenu.min.js}"></script>-->
+<!--<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>-->
+<!--<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>-->
+<!--<script th:src="@{/yuludev/js/yuludev-ui.js?v=4.2.0}"></script>-->
+<!--<script th:src="@{/yuludev/js/common.js?v=4.2.0}"></script>-->
+<!--<script th:src="@{/yuludev/index.js}"></script>-->
+<!--<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>-->
+
+<script>
+    $(function(){
+        $.ajax({
+            type:"POST",
+            url:"/page/listAllRecord",
+            async:false,
+            success:function(data){
+                $("#pageBody").empty();
+                $.each(data,function(i,v){
+                    let recordId = v.recordId;
+                    let deviceInfo = v.deviceInfo;
+                    let recordCode = v.recordCode;
+                    let createTime = v.createTime
+                    let recordTaskName = v.recordTaskName;
+                    let result = v.result;
+                    let deviceStatus = v.deviceStatus;
+                    let imgPath = v.imgPath
+                    let resultStatus = ""
+                    if(deviceStatus=="正常"){
+                        resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-primary\">"+deviceStatus+"</span>" + "</td>"
+                    }else if(deviceStatus=="报警"){
+                        resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-danger\">"+deviceStatus+"</span>" + "</td>"
+                    }else if(deviceStatus=="异常"){
+                        resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-secondary\">"+deviceStatus+"</span>" + "</td>"
+                    }else if(deviceStatus=="告警"){
+                        resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-warning\">"+deviceStatus+"</span>" + "</td>"
+                    }else{
+                        resultStatus="<td style=\"text-align: center; \">"  +deviceStatus + "</td>"
+                    }
+
+                    let content="<tr>"+
+                        "<td style=\"text-align: center; \">"+recordId+"</td>"+
+                        "<td style=\"text-align: center; \">"+deviceInfo+"</td>"+
+                        "<td style=\"text-align: center; \">"+recordCode+"</td>"+
+                        "<td style=\"text-align: center; \">"+createTime+"</td>"+
+                        "<td style=\"text-align: center; \">"+recordTaskName+"</td>"+
+                        "<td style=\"text-align: center; \">"+result+"</td>"+
+                        // "<td style=\"text-align: center; \">"+deviceStatus+"</td>"+
+                        resultStatus+
+                        "<td style=\"text-align: center; \"><a class=\"btn btn-success btn-xs \" href=\"javascript:void(0)\" onclick=\"seePicture(this)\"><i class=\"fa fa-edit\"></i>查看图片</a></td>"+
+                        "</tr>"
+
+                    $("#pageBody").append(content)
+                })
+            }
+        })
+    })
+
+    var dialog=$("#newdialog").dialog({
+        autoOpen:false,
+        width:1280,
+        height:720,
+        // modal:true,
+    })
+    //
+    // // 图表初始化函数
+    // var chart = Highcharts.chart('container', {
+    //     title: {
+    //         text: '电流曲线图'                 // 标题
+    //     },
+    //     xAxis: {
+    //         categories: ['2022012215','2022012310','2022012311','2022012312','2022012313','2022012314']   // x 轴分类
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: '电流值'                // y 轴标题
+    //         }
+    //     },
+    //     legend : {
+    //         //图例
+    //         layout: 'vertical',
+    //         align: 'right',
+    //         verticalAlign: 'middle',
+    //         borderWidth: 0
+    //     },
+    //     credits: {
+    //         enabled : false
+    //     },
+    //     series:[{
+    //         name:'703',
+    //         data:[1980,2010,2000,1960,3400,2500]
+    //     },{
+    //         name:'704',
+    //         data:[2015,2014,2100,1980,3400,3410]
+    //     },{
+    //         name:'705',
+    //         data:[3100,1231,2600,3541,2360,3150]
+    //     }]
+    //
+    // });
+    //
+    // var temChart = Highcharts.chart('temContainer', {
+    //     title: {
+    //         text: '温度曲线图'
+    //     },
+    //     xAxis: {
+    //         categories: ['2022012215','2022012310','2022012311','2022012312','2022012313','2022012314']   // x 轴分类
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: '温度值'
+    //         }
+    //     },
+    //     legend: {
+    //         layout: 'vertical',
+    //         align: 'right',
+    //         verticalAlign: 'middle',
+    //         borderWidth: 0
+    //     },
+    //     credits: {
+    //         enabled : false
+    //     },
+    //     series: [{
+    //         name:'703',
+    //         data:[23,24,23,22,25,26]
+    //     },{
+    //         name:'704',
+    //         data:[24,25,23,26,28,22]
+    //     },{
+    //         name:'705',
+    //         data:[21,25,22,27,28,24]
+    //     }]
+    // });
+    //
+    // var humChart = Highcharts.chart('humContainer', {
+    //     title: {
+    //         text: '湿度曲线图'
+    //     },
+    //     xAxis: {
+    //         categories: ['2022012215','2022012310','2022012311','2022012312','2022012313','2022012314']   // x 轴分类
+    //     },
+    //     yAxis: {
+    //         title: {
+    //             text: '湿度值'
+    //         }
+    //     },
+    //     legend: {
+    //         layout: 'vertical',
+    //         align: 'right',
+    //         verticalAlign: 'middle',
+    //         borderWidth: 0
+    //     },
+    //     credits: {
+    //         enabled : false
+    //     },
+    //     series: [{
+    //         name:'703',
+    //         data:[45,46,44,44,45,47]
+    //     },{
+    //         name:'704',
+    //         data:[45,46,44,43,45,44]
+    //     },{
+    //         name:'705',
+    //         data:[46,45,45,43,42,44]
+    //     }]
+    //
+    // });
+    //
+    // //所有信息点击事件
+    // function showAllInformat(){
+    //     let allInformat=$("#allInformat")
+    //     if (allInformat.attr("class")!="active"){
+    //         allInformat.addClass("active");
+    //         $("#analysis").removeClass("active");
+    //         // $("#temAndHumAnalysis").removeClass("active");
+    //
+    //     }
+    //
+    //     $("#dataOne").show();
+    //     $("#dataTwo").hide();
+    //     // $("#dataThree").hide();
+    //
+    // }
+    // //统计分析点击事件
+    // function showAnalysis(){
+    //     let analysis=$("#analysis")
+    //     if (analysis.attr("class")!="active"){
+    //         analysis.addClass("active");
+    //         $("#allInformat").removeClass("active");
+    //         // $("#temAndHumAnalysis").removeClass("active");
+    //
+    //     }
+    //
+    //     $("#dataOne").hide();
+    //     $("#dataTwo").show();
+    //
+    //
+    // }
+    // //统计分析->电流统计点击事件
+    // function showElectric() {
+    //     let electric=$("#electric")
+    //     if(electric.attr("class")!="active"){
+    //         electric.addClass("active")
+    //         $("#TemAndHum").removeClass("active")
+    //     }
+    //
+    //     $("#eleInformation").show();
+    //     $("#temAndHumInformation").hide();
+    // }
+    // //统计分析->温度湿度统计点击事件
+    // function showTemAndHum() {
+    //
+    //     let temAndHum=$("#TemAndHum")
+    //     if(temAndHum.attr("class")!="active"){
+    //         temAndHum.addClass("active")
+    //         $("#electric").removeClass("active")
+    //     }
+    //
+    //     $("#eleInformation").hide();
+    //     $("#temAndHumInformation").show();
+    // }
+    //
+    // //统计分析->电流搜索事件
+    // function eleSearch() {
+    //     var d = {};
+    //     var t=$("#ele_config-form").serializeArray();
+    //     $.each(t, function() {
+    //         d[this.name] = this.value;
+    //     });
+    //     taskname=d.taskname
+    //
+    //     beginTime=d.beginTime
+    //     endTime=d.endTime
+    //
+    //
+    //     $.ajax({
+    //         url:"/listEleSearch",
+    //         type:"POST",
+    //         data:{
+    //             taskname:taskname,
+    //             beginTime:beginTime,
+    //             endTime:endTime,
+    //         },
+    //         async:false,
+    //         success:function (data) {
+    //             // console.log(data)
+    //             let xAxis=data.xAxis;
+    //             let eleValue=data.eleValue;
+    //
+    //             if(xAxis.length!=0&&(!jQuery.isEmptyObject(eleValue))){
+    //                 // console.log("1")
+    //                 //x轴
+    //
+    //                 //曲线图的值
+    //                 let series=[]
+    //                 //现在只展示平均值
+    //                 $.each(eleValue,function (key,value) {
+    //                     var serie={
+    //                         name:key,
+    //                         data:value
+    //                     }
+    //                     series.push(serie)
+    //
+    //                 })
+    //
+    //                 var options = {
+    //                     title: {
+    //                         text: '电流曲线图'                 // 标题
+    //                     },
+    //                     xAxis: {
+    //                         categories: xAxis   // x 轴分类
+    //                     },
+    //                     yAxis: {
+    //                         title: {
+    //                             text: '电流值'                // y 轴标题
+    //                         }
+    //                     },
+    //                     // tooltip: {
+    //                     //     //后缀
+    //                     //     valueSuffix: ''
+    //                     // },
+    //                     legend : {
+    //                         //图例
+    //                         layout: 'vertical',
+    //                         align: 'right',
+    //                         verticalAlign: 'middle',
+    //                         borderWidth: 0
+    //                     },
+    //                     credits: {
+    //                         enabled : false
+    //                     },
+    //                     series:series
+    //
+    //                 };
+    //
+    //                 // 图表初始化函数
+    //                 var chart = Highcharts.chart('container', options);
+    //
+    //             }
+    //
+    //
+    //         }
+    //     })
+    //
+    //
+    //
+    // }
+    //
+    // //统计分析->温度湿度搜索事件
+    // function temAndHumSearch() {
+    //     var d = {};
+    //     var t=$("#temAndHum_config-form").serializeArray();
+    //     $.each(t, function() {
+    //         d[this.name] = this.value;
+    //     });
+    //     taskname=d.taskname
+    //
+    //     beginTime=d.beginTime
+    //     endTime=d.endTime
+    //
+    //     $.ajax({
+    //         url:"/listTemAndHumSearch",
+    //         type:"POST",
+    //         data:{
+    //             taskname:taskname,
+    //             beginTime:beginTime,
+    //             endTime:endTime,
+    //         },
+    //         async:false,
+    //         success:function (data) {
+    //             let temxAxis=data.temxAxis;
+    //             let temValue=data.temValue;
+    //             let humxAxis=data.humxAxis;
+    //             let humValue=data.humValue;
+    //
+    //             //添加温度曲线图
+    //             if(temxAxis.length!=0&&(!jQuery.isEmptyObject(temValue))){
+    //                 // console.log("data")
+    //                 let temContainer="<div id=\"temContainer\" class=\"col-md-6\" style=\"width: 600px;height:400px;\"></div>";
+    //                 $("#temAndHumChart").append(temContainer);
+    //
+    //
+    //                 let temSeries=[]
+    //                 //现在只展示平均值
+    //                 $.each(temValue,function (key,value) {
+    //                     var serie={
+    //                         name:key,
+    //                         data:value
+    //                     }
+    //                     temSeries.push(serie)
+    //
+    //                 })
+    //
+    //
+    //                 var temChart = Highcharts.chart('temContainer', {
+    //                     title: {
+    //                         text: '温度曲线图'
+    //                     },
+    //                     xAxis: {
+    //                         categories: temxAxis   // x 轴分类
+    //                     },
+    //                     yAxis: {
+    //                         title: {
+    //                             text: '温度值'
+    //                         }
+    //                     },
+    //                     legend: {
+    //                         layout: 'vertical',
+    //                         align: 'right',
+    //                         verticalAlign: 'middle'
+    //                     },
+    //                     credits: {
+    //                         enabled : false
+    //                     },
+    //                     series: temSeries,
+    //                     responsive: {
+    //                         rules: [{
+    //                             condition: {
+    //                                 maxWidth: 500
+    //                             },
+    //                             chartOptions: {
+    //                                 legend: {
+    //                                     layout: 'horizontal',
+    //                                     align: 'center',
+    //                                     verticalAlign: 'bottom'
+    //                                 }
+    //                             }
+    //                         }]
+    //                     }
+    //                 });
+    //
+    //
+    //             }
+    //             //添加湿度曲线图
+    //             if(humxAxis.length!=0&&(!jQuery.isEmptyObject(humValue))){
+    //                 let humContainer="<div id=\"humContainer\" class=\"col-md-6\" style=\"width: 600px;height:400px;\"></div>";
+    //                 $("#temAndHumChart").append(humContainer);
+    //
+    //                 let humSeries=[]
+    //                 //现在只展示平均值
+    //                 $.each(humValue,function (key,value) {
+    //                     var serie={
+    //                         name:key,
+    //                         data:value
+    //                     }
+    //                     humSeries.push(serie)
+    //
+    //                 })
+    //
+    //                 var humChart = Highcharts.chart('humContainer', {
+    //                     title: {
+    //                         text: '湿度曲线图'
+    //                     },
+    //                     xAxis: {
+    //                         categories: humxAxis   // x 轴分类
+    //                     },
+    //                     yAxis: {
+    //                         title: {
+    //                             text: '湿度值'
+    //                         }
+    //                     },
+    //                     legend: {
+    //                         layout: 'vertical',
+    //                         align: 'right',
+    //                         verticalAlign: 'middle'
+    //                     },
+    //                     credits: {
+    //                         enabled : false
+    //                     },
+    //                     series: humSeries,
+    //                     responsive: {
+    //                         rules: [{
+    //                             condition: {
+    //                                 maxWidth: 500
+    //                             },
+    //                             chartOptions: {
+    //                                 legend: {
+    //                                     layout: 'horizontal',
+    //                                     align: 'center',
+    //                                     verticalAlign: 'bottom'
+    //                                 }
+    //                             }
+    //                         }]
+    //                     }
+    //                 });
+    //
+    //
+    //             }
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //
+    //         }
+    //     })
+    //
+    //
+    // }
+
+    // function showTemAndHumAnalysis(){
+    //     let temAndHumAnalysis=$("#temAndHumAnalysis")
+    //     if (temAndHumAnalysis.attr("class")!="active"){
+    //         temAndHumAnalysis.addClass("active");
+    //         $("#allInformat").removeClass("active");
+    //         $("#electricAnalysis").removeClass("active");
+    //
+    //     }
+    //
+    //     $("#dataOne").hide();
+    //     $("#dataTwo").hide();
+    //     $("#dataThree").show();
+    //
+    // }
+
+
+
+    layui.use('laydate', function(){
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#startTime' ,//指定元素
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH',
+
+        });
+
+        laydate.render({
+            elem: '#endTime' ,//指定元素
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH',
+
+
+        });
+
+        laydate.render({
+            elem: '#eleStartTime' ,//指定元素
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH',
+
+        });
+
+        laydate.render({
+            elem: '#eleEndTime' ,//指定元素
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH',
+
+        });
+
+        laydate.render({
+            elem: '#temAndHumStartTime' ,//指定元素
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH',
+
+        });
+
+        laydate.render({
+            elem: '#temAndHumEndTime' ,//指定元素
+            type: 'datetime',
+            format: 'yyyy-MM-dd HH',
+
+        });
+
+
+
+    });
+
+
+
+    //当前页码
+    var pageNum=1;
+    //每页总数
+    var pageSize=10;
+    //页码总数
+    var totalPages=1;
+    //总共数量
+    var totalSize=0;
+    //柜名
+    var taskname=taskname;
+    //仪器表明
+    var instrument=instrument;
+    //状态
+    var status=status;
+    //开始时间
+    var beginTime=beginTime;
+    //结束时间
+    var endTime=endTime;
+
+    //
+    // //搜索触发函数
+    // function search(){
+    //     var d = {};
+    //     var t=$("#config-form").serializeArray();
+    //     $.each(t, function() {
+    //         d[this.name] = this.value;
+    //     });
+    //     // let data=JSON.stringify(d)
+    //     // console.log(d)
+    //     taskname=d.taskname
+    //     instrument=d.instrument
+    //     status=d.status
+    //     beginTime=d.beginTime
+    //     endTime=d.endTime
+    //     if(new Date(beginTime)>new Date(endTime)){
+    //         alert("开始时间必须小于等于结束时间")
+    //         return;
+    //
+    //     }
+    //     // var tasks={};
+    //     // tasks["703"]=""
+    //
+    //     $.ajax({
+    //         url:"/listPageLatestTableResult",
+    //         type:"POST",
+    //         data:{
+    //             taskname:taskname,
+    //             instrument:instrument,
+    //             status:status,
+    //             beginTime:beginTime,
+    //             endTime:endTime,
+    //             pageNum:1,
+    //             pageSize:pageSize
+    //         },
+    //         async:false,
+    //         success:function (data) {
+    //
+    //
+    //             //总共数量
+    //             totalSize=data.totalSize;
+    //             //页码总数
+    //             totalPages=data.totalPages;
+    //             //当前页码
+    //             pageNum=1;
+    //             //所有记录
+    //             let results=data.content;
+    //
+    //             $("#pageLimit").empty();
+    //             $("#pageBody").empty();
+    //
+    //
+    //             $.each(results,function (i,d) {
+    //
+    //                 let record_code=d.record_code;
+    //                 let taskname=d.taskname;
+    //                 let tablename=d.tablename;
+    //                 let result=d.result;
+    //                 let ident_status=d.ident_status;
+    //                 let ident_info=d.ident_info;
+    //                 let ident_time=d.ident_time;
+    //
+    //                 let resultStatus=""
+    //                 if(ident_status=="正常"){
+    //                     resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-primary\">"+ident_status+"</span>" + "</td>"
+    //                 }else if(ident_status=="报警"){
+    //                     resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-danger\">"+ident_status+"</span>" + "</td>"
+    //                 }else if(ident_status=="异常"){
+    //                     resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-secondary\">"+ident_status+"</span>" + "</td>"
+    //                 }else if(ident_status=="告警"){
+    //                     resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-warning\">"+ident_status+"</span>" + "</td>"
+    //                 }else{
+    //                     resultStatus="<td style=\"text-align: center; \">"  +ident_status + "</td>"
+    //                 }
+    //
+    //                 let content="<tr>"+
+    //                     "<td style=\"text-align: center; \">"+((pageNum-1)*10+i+1).toString()+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+taskname+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+record_code+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+ident_time+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+tablename+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+result+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+ident_info+"</td>"+
+    //                     resultStatus+
+    //                     "<td style=\"text-align: center; \"><a class=\"btn btn-success btn-xs \" href=\"javascript:void(0)\" onclick=\"seePicture(this)\"><i class=\"fa fa-edit\"></i>查看图片</a></td>"+
+    //                     "</tr>"
+    //
+    //                 $("#pageBody").append(content)
+    //
+    //             })
+    //
+    //             if(totalPages!=0){
+    //
+    //                 let str="";
+    //
+    //                 str = "<li><a href=\"javascript:void(0)\" οnclick=\"getPage(" + 1 + ")\">First</a></li>";
+    //                 $("#pageLimit").append(str);
+    //
+    //                 str="<li>" +
+    //                     "<a href=\"javascript:void(0)\" aria-label=\"Previous\" class=\"pagePreNext\" data-id=\"pre\")\">" +
+    //                     "<span aria-hidden=\"true\">&laquo;</span>" +
+    //                     "</a>"+
+    //                     "</li>"
+    //
+    //                 $("#pageLimit").append(str)
+    //
+    //                 if(totalPages<=5){
+    //                     for(let i = 1 ; i<= totalPages ; ++i){
+    //                         str="<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+i+">"+i+"</a></li>"
+    //                         // str="<li><a οnclick='getPage(" + i + ")'>" + i + "</a></li>";
+    //                         $("#pageLimit").append(str);
+    //                     }
+    //
+    //                 }else {
+    //
+    //                     let endPageNum=3;
+    //                     for(let i = 1 ; i<= endPageNum ; ++i){
+    //                         str="<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+i+">"+i+"</a></li>"
+    //                         $("#pageLimit").append(str);
+    //                     }
+    //                     str="<li><a  href=\"javascript:void(0)\" class=\"ellipsis\" data-id="+(endPageNum + 1)+">" + "…" + "</a></li>";
+    //                     $("#pageLimit").append(str);
+    //
+    //                     str="<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+totalPages+">"+totalPages+"</a></li>"
+    //                     $("#pageLimit").append(str);
+    //
+    //                 }
+    //                 str=
+    //                     "<li>\n" +
+    //                     "   <a href=\"javascript:void(0)\" aria-label=\"Next\" class=\"pagePreNext\" data-id=\"next\">\n" +
+    //                     "       <span aria-hidden=\"true\">&raquo;</span>\n" +
+    //                     "   </a>\n" +
+    //                     "</li>"
+    //
+    //                 $("#pageLimit").append(str)
+    //                 highLight()
+    //
+    //             }
+    //
+    //
+    //         }
+    //     })
+    //
+    //
+    //
+    // }
+
+    // function getPage(tmpPageNum){
+    //     // console.log(tmpPageNum)
+    //     if(tmpPageNum>totalPages||tmpPageNum<=0){
+    //         return;
+    //     }
+    //
+    //     pageNum=tmpPageNum;
+    //     rebuildPage(pageNum)
+    //     highLight()
+    //     $.ajax({
+    //         url:"/listPageLatestTableResult",
+    //         type:"POST",
+    //         data:{
+    //             taskname:taskname,
+    //             instrument:instrument,
+    //             status:status,
+    //             beginTime:beginTime,
+    //             endTime:endTime,
+    //             pageNum:pageNum,
+    //             pageSize:pageSize
+    //         },
+    //         async:false,
+    //         success:function (data) {
+    //             let results=data.content;
+    //             //清空数据
+    //             $("#pageBody").empty();
+    //             $.each(results,function (i,d) {
+    //                 let record_code=d.record_code;
+    //                 let taskname=d.taskname;
+    //                 let tablename=d.tablename;
+    //                 let result=d.result;
+    //                 let ident_status=d.ident_status;
+    //                 let ident_info=d.ident_info;
+    //                 let ident_time=d.ident_time;
+    //
+    //                 let resultStatus=""
+    //                 if(ident_status=="正常"){
+    //                     resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-primary\">"+ident_status+"</span>" + "</td>"
+    //                 }else if(ident_status=="报警"){
+    //                     resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-danger\">"+ident_status+"</span>" + "</td>"
+    //                 }else if(ident_status=="异常"){
+    //                     resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-secondary\">"+ident_status+"</span>" + "</td>"
+    //                 }else if(ident_status=="告警"){
+    //                     resultStatus="<td style=\"text-align: center; \">" + "<span class=\"badge badge-warning\">"+ident_status+"</span>" + "</td>"
+    //                 }else{
+    //                     resultStatus="<td style=\"text-align: center; \">"  +ident_status + "</td>"
+    //                 }
+    //
+    //
+    //                 let content="<tr>"+
+    //                     "<td style=\"text-align: center; \">"+((pageNum-1)*10+i+1).toString()+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+taskname+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+record_code+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+ident_time+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+tablename+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+result+"</td>"+
+    //                     "<td style=\"text-align: center; \">"+ident_info+"</td>"+
+    //                     resultStatus+
+    //                     "<td style=\"text-align: center; \"><a class=\"btn btn-success btn-xs \" href=\"javascript:void(0)\" onclick=\"seePicture(this)\"><i class=\"fa fa-edit\"></i>查看图片</a></td>"+
+    //                     "</tr>"
+    //
+    //                 $("#pageBody").append(content)
+    //             })
+    //         }
+    //     })
+    //
+    //
+    // }
+    //
+    // function rebuildPage(currentPage) {
+    //     // alert(currentPage)
+    //     if(totalPages<=5){
+    //         return;
+    //     }
+    //
+    //     if(currentPage==1){
+    //         $("#pageLimit").empty();
+    //
+    //         let str="";
+    //
+    //         str = "<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+1+">First</a></li>";
+    //         $("#pageLimit").append(str);
+    //
+    //
+    //         str="<li>" +
+    //             "<a href=\"javascript:void(0)\" aria-label=\"Previous\" class=\"pagePreNext\" data-id=\"pre\">" +
+    //             "<span aria-hidden=\"true\">&laquo;</span>" +
+    //             "</a>"+
+    //             "</li>"
+    //
+    //         $("#pageLimit").append(str)
+    //         let endPageNum=currentPage+2;
+    //         for(let i = currentPage ; i<= endPageNum ; ++i){
+    //             str="<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+i+">"+i+"</a></li>";
+    //             $("#pageLimit").append(str);
+    //         }
+    //         str="<li><a href=\"javascript:void(0)\" class=\"ellipsis\" data-id="+(endPageNum + 1)+">" + "…" + "</a></li>";
+    //         $("#pageLimit").append(str);
+    //
+    //         str = "<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+totalPages+">" + totalPages + "</a></li>";
+    //         $("#pageLimit").append(str);
+    //
+    //         str=
+    //             "<li>\n" +
+    //             "   <a href=\"javascript:void(0)\" aria-label=\"Next\" class=\"pagePreNext\" data-id=\"next\">\n" +
+    //             "       <span aria-hidden=\"true\">&raquo;</span>\n" +
+    //             "   </a>\n" +
+    //             "</li>"
+    //
+    //         $("#pageLimit").append(str)
+    //
+    //
+    //
+    //
+    //     }else if(currentPage<totalPages-1){
+    //         $("#pageLimit").empty();
+    //
+    //         let str="";
+    //
+    //         str = "<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+1+">First</a></li>";
+    //         $("#pageLimit").append(str);
+    //
+    //         str="<li>" +
+    //             "<a href=\"javascript:void(0)\" aria-label=\"Previous\" class=\"pagePreNext\" data-id=\"pre\">" +
+    //             "<span aria-hidden=\"true\">&laquo;</span>" +
+    //             "</a>"+
+    //             "</li>"
+    //
+    //         $("#pageLimit").append(str)
+    //         let endPageNum = currentPage + 1;
+    //
+    //         // str = "<li><a οnclick='getpage(1)'>1</a></li>";
+    //         // $("#pageLimit").append(str);
+    //         //
+    //         // str="<li><a οnclick='rebuildPage(" + (endPageNum + 1) + ")'>" + "…" + "</a></li>";
+    //         // $("#pageLimit").append(str);
+    //
+    //
+    //         for (let i=currentPage-1;i<=endPageNum;++i){
+    //             str="<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+i+">"+i+"</a></li>";
+    //             $("#pageLimit").append(str);
+    //         }
+    //
+    //         str="<li><a href=\"javascript:void(0)\" class=\"ellipsis\" data-id="+(endPageNum + 1)+">" + "…" + "</a></li>";
+    //         $("#pageLimit").append(str);
+    //
+    //         str = "<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+totalPages+">" + totalPages + "</a></li>";
+    //         $("#pageLimit").append(str);
+    //
+    //
+    //         str=
+    //             "<li>\n" +
+    //             "   <a href=\"javascript:void(0)\" aria-label=\"Next\" class=\"pagePreNext\" data-id=\"next\">\n" +
+    //             "       <span aria-hidden=\"true\">&raquo;</span>\n" +
+    //             "   </a>\n" +
+    //             "</li>"
+    //
+    //         $("#pageLimit").append(str)
+    //
+    //     }else if(currentPage>=totalPages-1){
+    //         $("#pageLimit").empty();
+    //
+    //         let str="";
+    //
+    //         str = "<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+1+">First</a></li>";
+    //         $("#pageLimit").append(str);
+    //
+    //         str="<li>" +
+    //             "<a href=\"javascript:void(0)\" aria-label=\"Previous\" class=\"pagePreNext\" data-id=\"pre\">" +
+    //             "<span aria-hidden=\"true\">&laquo;</span>" +
+    //             "</a>"+
+    //             "</li>"
+    //
+    //         $("#pageLimit").append(str)
+    //
+    //         let beginPageNum=totalPages-2
+    //
+    //         // str = "<li><a href=\"javascript:void(0)\" οnclick=\"getPage(" + 1 + ")\">" + 1 + "</a></li>";
+    //         // $("#pageLimit").append(str);
+    //
+    //         str="<li><a href=\"javascript:void(0)\" class=\"ellipsis\" data-id="+(beginPageNum - 1)+">" + "…" + "</a></li>";
+    //         $("#pageLimit").append(str);
+    //
+    //         for (let i=beginPageNum;i<=totalPages;++i){
+    //             str="<li><a href=\"javascript:void(0)\" class=\"pageNumber\" data-id="+i+">"+i+"</a></li>";
+    //             $("#pageLimit").append(str);
+    //         }
+    //
+    //         str=
+    //             "<li>\n" +
+    //             "   <a href=\"javascript:void(0)\" aria-label=\"Next\" class=\"pagePreNext\" data-id=\"next\">\n" +
+    //             "       <span aria-hidden=\"true\">&raquo;</span>\n" +
+    //             "   </a>\n" +
+    //             "</li>"
+    //
+    //         $("#pageLimit").append(str)
+    //
+    //
+    //
+    //
+    //
+    //
+    //     }
+    //
+    // }
+    //
+    // $("#pageLimit").on("click",".ellipsis",function () {
+    //     let page=$(this).data('id')
+    //     // alert(page)
+    //     getPage(page)
+    //
+    //
+    // })
+    //
+    // $("#pageLimit").on("click",".pageNumber",function () {
+    //     let page=$(this).data('id')
+    //
+    //
+    //     // alert(page)
+    //     getPage(page)
+    //
+    //
+    // })
+    //
+    // $("#pageLimit").on("click",".pagePreNext",function () {
+    //     let preNext=$(this).data('id')
+    //     if(preNext=="pre"){
+    //         getPage(pageNum-1)
+    //
+    //     }else{
+    //         getPage(pageNum+1)
+    //     }
+    //
+    //
+    // })
+
+    function highLight() {
+        $(".pageNumber").each(function () {
+            if($(this).data('id')==pageNum){
+                if(!$(this).parent().hasClass('active')){
+                    $(this).parent().addClass('active').siblings().removeClass('active')
+                }
+            }
+        })
+    }
+
+
+
+
+    function seePicture(obj) {
+        let rowlists=$(obj).parent().siblings("td");
+
+        let recordCode=rowlists[2];
+        let imgName=recordCode.innerHTML;
+
+
+        let imgPath="http://localhost:8081/img/" + imgName  +".jpg"
+        $("#dialogImg").attr("src",imgPath)
+
+        let isOpen=dialog.dialog("isOpen");
+        if(isOpen==false){
+            dialog.dialog("open");
+        }
+    }
+
+    //关闭(查看图片)
+    function closeImageViewer(){
+        // $("#imgModal").modal('hide');
+    }
+
+
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <title>巡检机器人管理系统</title>
+    <meta name="description" content="巡检机器人管理系统">
+    <link href="../static/css/main/bootstrap.min.css" th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link href="../static/css/font-awesome.min.css" th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link href="../static/css/style.css" th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link href="../static/css/login.css" th:href="@{/css/login.css}" rel="stylesheet"/>
+    <link href="../static/yuludev/css/yuludev-ui.css" th:href="@{/yuludev/css/yuludev-ui.css?v=4.2.1}" rel="stylesheet"/>
+    <!-- 360浏览器急速模式 -->
+    <meta name="renderer" content="webkit">
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link rel="shortcut icon" href="../static/favicon.ico" th:href="@{favicon.ico}"/>
+    <style type="text/css">label.error { position:inherit;  }</style>
+    <script>
+        if(window.top!==window.self){alert('未登录或登录超时。请重新登录');window.top.location=window.location};
+    </script>
+</head>
+<body class="signin">
+<div class="signinpanel">
+    <div class="row">
+        <div class="col-sm-6 col-md-6 col-lg-6 col-sm-offset-3 col-md-offset-3 col-lg-offset-3">
+            <form id="signupForm" autocomplete="off">
+                <div align="center">
+                    <a href="http://www.liuzhousteel.com/">
+                        <img class="mb-4" th:src="@{/img/logo.png}" alt="" width="198" height="49">
+                    </a>
+                </div>
+                <h2 class="text-primary">登录 [[巡检机器人管理系统]]</h2>
+                <strong>还没有账号? <a th:href="@{/user/registerIndex}">立即注册</a></strong>
+                <p class="m-t-md"></p>
+                <input type="text"     name="username" class="form-control uname"     placeholder="用户名" value=""    />
+                <input type="password" name="password" class="form-control pword"     placeholder="密码"   value="" />
+
+                <div class="checkbox-custom" th:classappend="${captchaEnabled==false} ? 'm-t'">
+                    <input type="checkbox" id="rememberme" name="rememberme"> <label for="rememberme">记住我</label>
+                </div>
+                <button class="btn btn-success btn-block" id="btnSubmit" data-loading="正在验证登录，请稍后...">登录</button>
+            </form>
+        </div>
+    </div>
+</div>
+<script th:inline="javascript"> var ctx = [[@{/}]]; var captchaType = [[${captchaType}]]; </script>
+<!-- 全局js -->
+<script src="../static/js/jquery.min.js" th:src="@{/js/jquery.min.js}"></script>
+<script src="../static/js/bootstrap.min.js" th:src="@{/js/bootstrap.min.js}"></script>
+<!-- 验证插件 -->
+<script src="../static/ajax/libs/validate/jquery.validate.min.js" th:src="@{/ajax/libs/validate/jquery.validate.min.js}"></script>
+<script src="../static/ajax/libs/validate/messages_zh.min.js" th:src="@{/ajax/libs/validate/messages_zh.min.js}"></script>
+<script src="../static/ajax/libs/layer/layer.min.js" th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script src="../static/ajax/libs/blockUI/jquery.blockUI.js" th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script src="../static/yuludev/js/yuludev-ui.js" th:src="@{/yuludev/js/yuludev-ui.js?v=4.2.0}"></script>
+<script src="../static/yuludev/login.js" th:src="@{/yuludev/login.js}"></script>
+
+</body>
+</html>

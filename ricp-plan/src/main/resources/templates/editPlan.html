@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>编辑计划</title>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:href="@{favicon.ico}" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/skins.css}" rel="stylesheet"/>
+    <link th:href="@{/yuludev/css/yuludev-ui.css?v=4.2.0}" rel="stylesheet"/>
+</head>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <!--th:action="@{updateTask}" method="post"-->
+    <form class="form-horizontal m" >
+        <input id="planId" type="hidden" th:value="${plans.planId}"/>
+<!--        <div class="form-group">-->
+<!--            <div class="col-sm-offset-2 col-sm-10">-->
+<!--                <a th:href="@{deletePlan(id=${plans.id})}" class="btn btn-sm btn-danger del-logo" onclick="var toDelete = (confirm('确定删除此计划？')); return toDelete ">删除</a>-->
+<!--            </div>-->
+<!--        </div>-->
+        <div class="form-group">
+            <label class="col-sm-3 control-label">计划名称：</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="planName" id="planName" th:value="${plans.planName}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">计划描述：</label>
+            <div class="col-sm-8">
+                <input type="text" class="form-control" name="planDes" id="planDes" th:value="${plans.planDes}">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">执行任务：</label>
+            <div class="col-sm-8" id="executeTasks">
+     
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="col-sm-3 control-label">计划周期：</label>
+            <div class="col-sm-8">
+                每<input  name="executeTime" id="executeTime"><select name="repeat" class="repeat" id="repeat" >
+                <option>分钟</option>
+                <option>小时</option>
+                <option>天</option>
+            </select>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-offset-2 col-sm-10">
+                <button  type="button" class="btn btn-sm btn-primary" onclick="editPlan()"><i class="fa fa-check"></i>保 存</button>&nbsp;
+                <a class="btn btn-sm btn-danger" th:href="@{/page/planPage}"><i class="fa fa-reply-all"></i>关 闭</a>
+            </div>
+        </div>
+    </form>
+</div>
+<!-- 全局js -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script th:src="@{/yuludev/js/yuludev-ui.js?v=4.2.0}"></script>
+<script th:src="@{/yuludev/js/common.js?v=4.2.0}"></script>
+<script th:src="@{/yuludev/index.js}"></script>
+<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
+<script th:src="@{/robot/js/editPlan.js}"></script>
+
+<script>
+    $(function(){
+        $.ajax({
+            type:"POST",
+            url:"/page/listAllTask",
+            async:false,
+            success:function(data){
+                $.each(data,function(i,v){
+                    let taskId=v.taskId;
+                    let taskName=v.taskName;
+                    let content="";
+                    content+=
+                        "<label class=\"checkbox-inline\">"+
+                        "<input type=\"checkbox\" id=\""+taskId+
+                        "\" value=\""+taskName+"\">"+taskName+"</label>";
+                    $("#executeTasks").append(content);
+                })
+            }
+        })
+    })
+
+    function editPlan(){
+        let planId = $("#planId").val();
+        let planName=$("#planName").val();
+        let planDes=$("#planDes").val();
+        let executeTasks="";
+        let executeTime="每" + $("#executeTime").val() + $("#repeat option:selected").text();
+
+        let formData = new FormData()
+        $("input:checkbox:checked").each(function(){
+            executeTasks+=$(this).val()+",";
+        })
+
+        executeTasks=executeTasks.substring(0,executeTasks.length-1);
+        formData.append('planId', planId)
+        formData.append('planName',planName)
+        formData.append('planDes',planDes)
+        formData.append('executeTasks',executeTasks)
+        formData.append('executeTime',executeTime)
+        console.log(formData)
+        $.ajax({
+            type:"POST",
+            url:"/page/updatePlan",
+            contentType:false,
+            processData: false, // 上传进度
+            cache: false,
+            data:formData,
+            success: function (data){
+                window.location.href = '/page/planPage'
+                // alert(data)
+            }
+        })
+    }
+</script>
+</html>

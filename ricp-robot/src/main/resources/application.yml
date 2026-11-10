@@ -1,0 +1,28 @@
+server:
+  port: 8084
+spring:
+  application:
+    # 应用名称，会在注册中心中显示
+    name: robot
+  cloud:
+    nacos:
+      discovery:
+        # 注册中心地址
+        server-addr: 127.0.0.1:8848
+      config:
+        #配置中心地址。
+        server-addr: ${spring.cloud.nacos.discovery.server-addr}
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/ricp?useUnicode=true&characterEncoding=utf8&autoReconnect=true&zeroDateTimeBehavior=convertToNull&useSSL=true&serverTimezone=Asia/Shanghai
+    username: root
+    password: 
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    database: mysql
+
+

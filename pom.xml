@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.wust30405</groupId>
+    <artifactId>yxw-ricp</artifactId>
+    <packaging>pom</packaging>
+    <version>0.0.1-SNAPSHOT</version>
+
+
+
+    <modules>
+        <!--用户服务-->
+        <module>ricp-user</module>
+        <!--巡检计划服务-->
+        <module>ricp-plan</module>
+        <!--巡检任务服务-->
+        <module>ricp-task</module>
+        <!--巡检记录服务-->
+        <module>ricp-record</module>
+        <!--通用父模块-->
+        <module>ricp-common</module>
+        <module>ricp-robot</module>
+        <module>ricp-detect</module>
+    </modules>
+
+
+</project>

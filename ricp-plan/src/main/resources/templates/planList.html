@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html  lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="renderer" content="webkit">
+    <title>巡检计划管理</title>
+    <!-- 避免IE使用兼容模式 -->
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:href="@{favicon.ico}" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/skins.css}" rel="stylesheet"/>
+    <link th:href="@{/yuludev/css/yuludev-ui.css?v=4.2.0}" rel="stylesheet"/>
+</head>
+<body class="full-height-layout gray-bg" style="overflow-x: hidden">
+
+<div form-group>
+    <div class="form-group">
+        <div class="col-sm-2 control-label">
+            <a th:href="@{insertTaskIndex}" class="btn btn-info">新建计划</a>
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-2 control-label">
+            <input type="text" class="form-control" name="orders" id="orders">
+        </div>
+        <div class="col-sm-2 control-label">
+            <button type="button" class="btn btn-sm btn-primary" onclick="dotask()"><i class="fa fa-check"></i>执行单次计划</button>
+        </div>
+    </div>
+    <div class="col-sm-12" th:fragment="table_refresh" id="table_refresh">
+
+
+        <table class="table table-striped table-sm " align="center">
+            <thead>
+            <tr>
+                <th>计划序号</th>
+                <th>计划名称</th>
+                <th>计划描述</th>
+                <th>执行任务</th>
+                <th>计划周期</th>
+                <th>操作员</th>
+                <th>创建时间</th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr th:each="plan:${plans}">
+                <td >
+                    <span th:text="${plan.planId}"/>
+                </td>
+                <td >
+                    <span th:text="${plan.planName}"/>
+                </td>
+                <td >
+                    <span th:text="${plan.planDes}"/>
+                </td>
+                <td >
+                    <span th:text="${plan.executeTasks}"/>
+                </td>
+                <td >
+                    <span th:text="${plan.executeTime}"/>
+                </td>
+                <td >
+                    <span th:text="${plan.createBy}"/>
+                </td>
+                <td >
+                    <span th:text="${plan.createTime}"/>
+                </td>
+                <td>
+                    <a th:href="@{/plan/editTask(id=${plan.planId})}" class="btn btn-sm btn-warning create-logo">编辑</a>
+                    <a th:href="@{/plan/deleteTask(id=${plan.planId})}" class="btn btn-sm btn-danger del-logo" onclick="var toDelete = (confirm('确定删除此任务？')); return toDelete ">删除</a>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+<!-- 全局js -->
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
+<script th:src="@{/robot/js/planlist.js}"></script>
+<script>
+    function dotask(){
+        let order_str = $("#orders").val();
+
+        let formdata =new FormData();
+        formdata.append("orders",order_str);
+        $.ajax({
+            type:"POST",
+            url:"/executeOrder",
+            processData:false,
+            contentType:false,
+            data: formdata,
+            success: function (data){
+                alert("成功")
+            }
+        });
+    }
+</script>
+</body>
+</html>

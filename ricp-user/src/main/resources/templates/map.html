@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="zh" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title></title>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta http-equiv="Pragma" content="no-cache" />
+    <meta http-equiv="Cache-Control" content="no-cache, must-revalidate" />
+    <meta http-equiv="Expires" content="0" />
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <link th:href="@{favicon.ico}" rel="stylesheet"/>
+    <link th:href="@{/css/bootstrap.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/jquery.contextMenu.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet"/>
+    <link th:href="@{/css/animate.css}" rel="stylesheet"/>
+    <link th:href="@{/css/style.css}" rel="stylesheet"/>
+    <link th:href="@{/css/skins.css}" rel="stylesheet"/>
+    <link th:href="@{/yuludev/css/yuludev-ui.css?v=4.2.0}" rel="stylesheet"/>
+
+</head>
+<style>
+
+#mapArea{
+
+    position: relative;
+
+    height:504px;
+    width: 808px;
+
+    /*background-image: url(../static/img/back.png) ;*/
+    background-repeat: no-repeat;
+}
+#robot{
+    position: absolute;
+    height: 10px;
+    width: 10px;
+    top:45px;
+    right:258px;
+    /*background-color: #000000;*/
+    border-color: #0b2e13;
+    border-style: solid;
+    border-width: 1px;
+}
+
+
+
+</style>
+<body>
+<div id="body">
+
+
+    <div id="mapArea" th:style="'background-image: url(/img/back.png)'">
+        <div id="robot"></div>
+    </div>
+
+
+</div>    
+
+</body>
+<script th:src="@{/js/jquery-1.7.1.min.js}"></script>
+<script th:src="@{/js/webVideoCtrl.js}"></script>
+<script th:src="@{/js/jquery.min.js}"></script>
+<script th:src="@{/js/bootstrap.min.js}"></script>
+<script th:src="@{/js/plugins/metisMenu/jquery.metisMenu.js}"></script>
+<script th:src="@{/js/plugins/slimscroll/jquery.slimscroll.min.js}"></script>
+<script th:src="@{/js/jquery.contextMenu.min.js}"></script>
+<script th:src="@{/ajax/libs/blockUI/jquery.blockUI.js}"></script>
+<script th:src="@{/ajax/libs/layer/layer.min.js}"></script>
+<script th:src="@{/ajax/libs/fullscreen/jquery.fullscreen.js}"></script>
+<script>
+
+
+
+function getRobotXAndY(){
+    $.ajax({
+        type:"GET",
+        async:false,
+        url:"http://127.0.0.1/api/robot_status",
+        success:function(data){
+
+            let dataJson=JSON.parse(data)
+
+            let results=dataJson.results;
+            let current_pose=results.current_pose;
+
+
+            let x=current_pose.x;
+            let y=current_pose.y;
+            let tmpX=parseFloat(x)-(-8.37485)
+            let tmpY=parseFloat(y)-(-17.1364)
+            let newX=tmpX<0?(258+Math.abs(tmpX*50)):(258-Math.abs(tmpX*50));
+            let newY=tmpX<0?(45+Math.abs(tmpY*50)):(45-Math.abs(tmpY*50));
+            $("#robot").css({
+                'top':newY.toString()+'px',
+                'right':newX.toString()+'px'
+            })
+        }
+    })
+}
+
+
+
+
+
+// setInterval(getRobotXAndY,1000)
+
+
+
+
+
+
+</script>
+</html>
