@@ -4,7 +4,7 @@
 
 > 与库柏特科技联合完成工业仪表场景试点；已登记计算机软件著作权。
 
-![巡检总览](docs/images/dashboard.png)
+![巡检记录](docs/images/record-list.png)
 
 ---
 
@@ -167,9 +167,9 @@ powershell -ExecutionPolicy Bypass -File scripts\local-demo\start-all.ps1
 |---|---|
 | ![](docs/images/plan-list.png) | ![](docs/images/record-list.png) |
 
-| 机器人 SLAM 地图 | 服务订阅 |
-|---|---|
-| ![](docs/images/slam-map.png) | ![](docs/images/services.png) |
+| 平台服务订阅 |
+|---|
+| ![](docs/images/services.png) |
 
 ## 已知限制
 
