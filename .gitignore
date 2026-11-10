@@ -32,6 +32,13 @@ application-local.yml
 application-local.properties
 .env
 
-# 第三方分发包与前端静态资源（体积大，按需另行获取）
+# 第三方分发包与体积大的前端资源
+# 说明：ricp-user 的 static 已入库（演示页面依赖它）；
+# 其余三个模块的 static 是同一套 RuoYi 模板的重复副本（各约 21 MB），不重复入库。
 nacos/
-**/src/main/resources/static/
+ricp-plan/src/main/resources/static/
+ricp-task/src/main/resources/static/
+ricp-record/src/main/resources/static/
+
+# 本地演示生成的依赖清单
+scripts/local-demo/classpath.txt
